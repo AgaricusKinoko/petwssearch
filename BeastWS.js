@@ -1,6 +1,6 @@
 ﻿var WSList;
 
-function defaultArray(){
+function defaultArray(type){
   WSList = new Array();
   WSList.push({
     shuzoku:"アクエフ",
@@ -830,7 +830,7 @@ function defaultArray(){
   });
   WSList.push({
     shuzoku:"モスキート",
-    skill:"グループスプレー",
+    skill:"グルームスプレー",
     charge:2,
     shubetu:"魔法",
     zokusei:"闇",
@@ -951,34 +951,78 @@ function defaultArray(){
     renkei2:"",
     tuika:"攻撃力ダウン(攻-15%) 30s - 1m"
   });
-  createTable();
+  if(!type)createTable();
 }
 
-function createTable(){
+function createTable(hyoji){
+  var open = hyoji || 0;
   var table = document.getElementById("WStable");
-  for(var i = table.rows.length -1; i > 0; i--){
-    table.deleteRow(-1);
+  if(open == 0){
+    for(var i = table.rows.length -1; i > 0; i--){
+      table.deleteRow(-1);
+    }
+    var list = createArray();
+    list.forEach(function(ws){
+      var tr = table.insertRow(-1);
+      var td = tr.insertCell(-1);
+      td.innerHTML = ws.shuzoku;
+      var td = tr.insertCell(-1);
+      td.innerHTML = ws.skill;
+      var td = tr.insertCell(-1);
+      td.innerHTML = ws.charge;
+      var td = tr.insertCell(-1);
+      td.innerHTML = ws.shubetu;
+      var td = tr.insertCell(-1);
+      td.innerHTML = ws.zokusei;
+      var td = tr.insertCell(-1);
+      td.innerHTML = ws.renkei1;
+      var td = tr.insertCell(-1);
+      td.innerHTML = ws.renkei2;
+      var td = tr.insertCell(-1);
+      td.innerHTML = ws.tuika;
+    });
+  } else {
+    for(var i = table.rows.length -1; i >= 0; i--){
+      table.deleteRow(-1);
+    }
+    var renkei = document.search_form.renkei.options[document.search_form.renkei.selectedIndex].value;
+    var list = createArray2();
+    var onaji = document.forms.search_form.onaji.checked;
+    var pets = new Array();
+    var renkeiList = new Array();
+    if(onaji){
+      var hozon = "";
+      for(var i = 0; i < list.length; i++){
+        if(hozon == ""){
+          hozon = list[i].shuzoku;
+          pets.push(list[i]);
+        } else if(list[i].shuzoku == hozon){
+          pets.push(list[i]);
+        } else {
+          Array.prototype.push.apply(renkeiList, createRenkei(pets, renkei));
+          pets = new Array();
+          hozon = list[i].shuzoku;
+          pets.push(list[i]);
+        }
+      }
+      Array.prototype.push.apply(renkeiList, createRenkei(pets, renkei));
+    } else {
+      renkeiList = createRenkei(list, renkei);
+    }
+    renkeiList.forEach(function(renkei){
+      var tr = table.insertRow(-1);
+      var td = tr.insertCell(-1);
+      td.innerHTML = renkei.action1;
+      var td = tr.insertCell(-1);
+      td.innerHTML = "(" + renkei.pet1 + ")";
+      var td = tr.insertCell(-1);
+      td.innerHTML = "→";
+      var td = tr.insertCell(-1);
+      td.innerHTML = renkei.action2;
+      var td = tr.insertCell(-1);
+      td.innerHTML = "(" + renkei.pet2 + ")";
+    });
   }
-  var list = createArray();
-  list.forEach(function(ws){
-    var tr = table.insertRow(-1);
-    var td = tr.insertCell(-1);
-    td.innerHTML = ws.shuzoku;
-    var td = tr.insertCell(-1);
-    td.innerHTML = ws.skill;
-    var td = tr.insertCell(-1);
-    td.innerHTML = ws.charge;
-    var td = tr.insertCell(-1);
-    td.innerHTML = ws.shubetu;
-    var td = tr.insertCell(-1);
-    td.innerHTML = ws.zokusei;
-    var td = tr.insertCell(-1);
-    td.innerHTML = ws.renkei1;
-    var td = tr.insertCell(-1);
-    td.innerHTML = ws.renkei2;
-    var td = tr.insertCell(-1);
-    td.innerHTML = ws.tuika;
-  });
 }
 
 
@@ -1008,6 +1052,13 @@ function createArray(){
   for(var i = 0; i < 6; i++){
     newList = arrayFilter(newList, i, search[i]);
   }
+  return newList;
+}
+
+function createArray2(){
+  var newList = WSList;
+  var il = document.forms.search_form.IL.checked;
+  newList = arrayFilter(newList, 5, il);
   return newList;
 }
 
@@ -1045,4 +1096,345 @@ function arrayFilter(list, type, keyword){
     return list;
   }
   return workList;
+}
+
+function createRenkei(list, goal){
+  var route = goalRenkei(goal);
+  var renkeiList = new Array();
+  list.forEach(function(object){
+    var work = {
+      pet1:null,
+      action1:null,
+      renkei1:null,
+      pet2:null,
+      action2:null,
+      renkei2:null,
+      goal:goal
+    };
+    for(var i = 0; i < route.length; i++){
+      if(object.renkei1 == route[i].action1){
+        work.pet1 = object.shuzoku;
+        work.action1 = object.skill;
+        work.renkei1 = object.renkei1;
+        list.forEach(function(object2){
+          var flg = false;
+          if(object2.renkei1 == route[i].action2){
+            work.pet2 = object2.shuzoku;
+            work.action2 = object2.skill;
+            work.renkei2 = object2.renkei1;
+            renkeiList.push(JSON.parse(JSON.stringify(work)));
+            flg = true;
+          }
+          if(flg == false && object2.renkei2 == route[i].action2){
+            work.pet2 = object2.shuzoku;
+            work.action2 = object2.skill;
+            work.renkei2 = object2.renkei2;
+            renkeiList.push(JSON.parse(JSON.stringify(work)));
+            flg = true;
+          }
+        })
+      }
+      if(object.renkei2 == route[i].action1){
+        work.pet1 = object.shuzoku;
+        work.action1 = object.skill;
+        work.renkei1 = object.renkei2;
+        list.forEach(function(object2){
+          var flg = false;
+          if(object2.renkei1 == route[i].action2){
+            work.pet2 = object2.shuzoku;
+            work.action2 = object2.skill;
+            work.renkei2 = object2.renkei1;
+            renkeiList.push(JSON.parse(JSON.stringify(work)));
+            flg = true;
+          }
+          if(flg == false && object2.renkei2 == route[i].action2){
+            work.pet2 = object2.shuzoku;
+            work.action2 = object2.skill;
+            work.renkei2 = object2.renkei2;
+            renkeiList.push(JSON.parse(JSON.stringify(work)));
+            flg = true;
+          }
+        })
+      }
+    }
+  })
+  return renkeiList;
+}
+
+function nextRenkei(renkei){
+  var next = new Array();
+  switch(renkei){
+    case "溶解":
+      next[0] = {
+        action:"切断",
+        name:"切断"
+      };
+      next[1] = {
+        action:"衝撃",
+        name:"核熱"
+      };
+      break;
+    case "硬化":
+      next[0] = {
+        action:"衝撃",
+        name:"衝撃"
+      };
+      next[1] = {
+        action:"振動",
+        name:"分解"
+      };
+      break;
+    case "炸裂":
+      next[0] = {
+        action:"切断",
+        name:"切断"
+      };
+      next[1] = {
+        action:"収縮",
+        name:"重力"
+      };
+      break;
+    case "切断":
+      next[0] = {
+        action:"溶解",
+        name:"溶解"
+      };
+      next[1] = {
+        action:"炸裂",
+        name:"炸裂"
+      };
+      next[2] = {
+        action:"振動",
+        name:"振動"
+      };
+      break;
+    case "衝撃":
+      next[0] = {
+        action:"溶解",
+        name:"溶解"
+      };
+      next[1] = {
+        action:"炸裂",
+        name:"炸裂"
+      };
+      break;
+    case "貫通":
+      next[0] = {
+        action:"切断",
+        name:"湾曲"
+      };
+      next[1] = {
+        action:"収縮",
+        name:"収縮"
+      };
+      next[2] = {
+        action:"振動",
+        name:"振動"
+      };
+      break;
+    case "収縮":
+      next[0] = {
+        action:"貫通",
+        name:"貫通"
+      };
+      next[1] = {
+        action:"炸裂",
+        name:"炸裂"
+      };
+      break;
+    case "核熱":
+      next[0] = {
+        action:"分解",
+        name:"光"
+      };
+      next[1] = {
+        action:"重力",
+        name:"重力"
+      };
+      break;
+    case "重力":
+      next[0] = {
+        action:"湾曲",
+        name:"闇"
+      };
+      next[1] = {
+        action:"分解",
+        name:"分解"
+      };
+      break;
+    case "分解":
+      next[0] = {
+        action:"核熱",
+        name:"光"
+      };
+      next[1] = {
+        action:"湾曲",
+        name:"湾曲"
+      };
+      break;
+    case "湾曲":
+      next[0] = {
+        action:"重力",
+        name:"闇"
+      };
+      next[1] = {
+        action:"核熱",
+        name:"核熱"
+      };
+      break;
+    case "光":
+      next[0] = {
+        action:"光",
+        name:"光"
+      };
+      break;
+    case "闇":
+      next[0] = {
+        action:"闇",
+        name:"闇"
+      };
+      break;
+  }
+  return next;
+}
+
+function goalRenkei(renkei){
+  var next = new Array();
+  switch(renkei){
+    case "溶解":
+      next[0] = {
+        action1:"切断",
+        action2:"溶解"
+      };
+      next[1] = {
+        action1:"衝撃",
+        action2:"溶解"
+      };
+      break;
+    case "硬化":
+      next[0] = {
+        action1:"振動",
+        action2:"硬化"
+      };
+      break;
+    case "炸裂":
+      next[0] = {
+        action1:"切断",
+        action2:"炸裂"
+      };
+      next[1] = {
+        action1:"衝撃",
+        action2:"炸裂"
+      };
+      next[2] = {
+        action1:"収縮",
+        action2:"炸裂"
+      };
+      break;
+    case "切断":
+      next[0] = {
+        action1:"炸裂",
+        action2:"切断"
+      };
+      next[1] = {
+        action1:"溶解",
+        action2:"切断"
+      };
+      break;
+    case "衝撃":
+      next[0] = {
+        action1:"硬化",
+        action2:"衝撃"
+      };
+      next[1] = {
+        action1:"振動",
+        action2:"衝撃"
+      };
+      break;
+    case "貫通":
+      next[0] = {
+        action1:"収縮",
+        action2:"貫通"
+      };
+      break;
+    case "収縮":
+      next[0] = {
+        action1:"硬化",
+        action2:"収縮"
+      };
+      next[1] = {
+        action1:"貫通",
+        action2:"収縮"
+      };
+      break;
+    case "核熱":
+      next[0] = {
+        action1:"溶解",
+        action2:"衝撃"
+      };
+      next[1] = {
+        action1:"湾曲",
+        action2:"核熱"
+      };
+      break;
+    case "重力":
+      next[0] = {
+        action1:"炸裂",
+        action2:"収縮"
+      };
+      next[1] = {
+        action1:"核熱",
+        action2:"重力"
+      };
+      break;
+    case "分解":
+      next[0] = {
+        action1:"硬化",
+        action2:"振動"
+      };
+      next[1] = {
+        action1:"重力",
+        action2:"分解"
+      };
+      break;
+    case "湾曲":
+      next[0] = {
+        action1:"貫通",
+        action2:"切断"
+      };
+      next[1] = {
+        action1:"分解",
+        action2:"湾曲"
+      };
+      break;
+    case "光":
+      next[0] = {
+        action1:"核熱",
+        action2:"分解"
+      };
+      next[1] = {
+        action1:"分解",
+        action2:"核熱"
+      };
+      next[2] = {
+        action1:"光",
+        action2:"光"
+      };
+      break;
+    case "闇":
+      next[0] = {
+        action1:"湾曲",
+        action2:"重力"
+      };
+      next[1] = {
+        action1:"重力",
+        action2:"湾曲"
+      };
+      next[2] = {
+        action1:"闇",
+        action2:"闇"
+      };
+      break;
+  }
+  return next;
 }
