@@ -491,8 +491,8 @@ function defaultArray(){
     charge:1,
     shubetu:"物理",
     zokusei:"打",
-    renkei1:"",
-    renkei2:"衝撃",
+    renkei1:"衝撃",
+    renkei2:"",
     tuika:"スタン"
   });
   WSList.push({
