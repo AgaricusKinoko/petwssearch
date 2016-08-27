@@ -1232,6 +1232,16 @@ function nextRenkei(renkei){
         name:"振動"
       };
       break;
+    case "振動":
+      next[0] = {
+        action:"衝撃",
+        name:"衝撃"
+      };
+      next[1] = {
+        action:"硬化",
+        name:"硬化"
+      };
+      break;
     case "収縮":
       next[0] = {
         action:"貫通",
@@ -1349,6 +1359,16 @@ function goalRenkei(renkei){
       next[1] = {
         action1:"振動",
         action2:"衝撃"
+      };
+      break;
+    case "振動":
+      next[0] = {
+        action1:"貫通",
+        action2:"振動"
+      };
+      next[1] = {
+        action1:"切断",
+        action2:"振動"
       };
       break;
     case "貫通":
