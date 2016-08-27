@@ -1,4 +1,4 @@
-var WSList;
+﻿var WSList;
 
 function defaultArray(){
   WSList = new Array();
@@ -21,6 +21,39 @@ function defaultArray(){
     renkei1:"",
     renkei2:"",
     tuika:"悪疫、暗闇、魔法防御力ダウン"
+  });
+  WSList.push({
+    shuzoku:"アダマンタス",
+    skill:"トータスストンプ",
+    charge:1,
+    shubetu:"物理",
+    zokusei:"打",
+    renkei1:"溶解",
+    renkei2:"",
+    flg:true,
+    tuika:"防御力ダウン"
+  });
+  WSList.push({
+    shuzoku:"アダマンタス",
+    skill:"甲羅強化",
+    charge:1,
+    shubetu:"強化",
+    zokusei:"",
+    renkei1:"",
+    renkei2:"",
+    flg:true,
+    tuika:"防御力アップ"
+  });
+  WSList.push({
+    shuzoku:"アダマンタス",
+    skill:"アクアブレス",
+    charge:3,
+    shubetu:"魔法",
+    zokusei:"水",
+    renkei1:"",
+    renkei2:"",
+    flg:true,
+    tuika:""
   });
   WSList.push({
     shuzoku:"アプカル",
@@ -723,6 +756,39 @@ function defaultArray(){
     tuika:"毒(-47HP/3sec) 4m30s"
   });
   WSList.push({
+    shuzoku:"フライトラップ",
+    skill:"サペリフィック",
+    charge:1,
+    shubetu:"弱体",
+    zokusei:"闇",
+    renkei1:"",
+    renkei2:"",
+    flg:true,
+    tuika:"睡眠"
+  });
+  WSList.push({
+    shuzoku:"フライトラップ",
+    skill:"パルジィパレン",
+    charge:1,
+    shubetu:"弱体",
+    zokusei:"氷",
+    renkei1:"",
+    renkei2:"",
+    flg:true,
+    tuika:"麻痺"
+  });
+  WSList.push({
+    shuzoku:"フライトラップ",
+    skill:"グロオーサケス",
+    charge:2,
+    shubetu:"弱体",
+    zokusei:"土",
+    renkei1:"",
+    renkei2:"",
+    flg:true,
+    tuika:"スロウ(スロウ+35%)"
+  });
+  WSList.push({
     shuzoku:"マンドラゴラ",
     skill:"ヘッドバット",
     charge:1,
@@ -823,6 +889,39 @@ function defaultArray(){
     tuika:"スロウ(スロウ+25) 2m - 5m"
   });
   WSList.push({
+    shuzoku:"リンクス",
+    skill:"カオティックアイ",
+    charge:1,
+    shubetu:"弱体",
+    zokusei:"風",
+    renkei1:"",
+    renkei2:"",
+    flg:true,
+    tuika:"静寂"
+  });
+  WSList.push({
+    shuzoku:"リンクス",
+    skill:"ブラスター",
+    charge:2,
+    shubetu:"弱体",
+    zokusei:"氷",
+    renkei1:"",
+    renkei2:"",
+    flg:true,
+    tuika:"麻痺"
+  });
+  WSList.push({
+    shuzoku:"リンクス",
+    skill:"チャージドホイスカー",
+    charge:2,
+    shubetu:"魔法",
+    zokusei:"雷",
+    renkei1:"",
+    renkei2:"",
+    flg:true,
+    tuika:""
+  });
+  WSList.push({
     shuzoku:"レディバグ",
     skill:"サドンランジ",
     charge:1,
@@ -898,13 +997,15 @@ function createArray(){
   var shubetu = document.search_form.shubetu;
   var zokusei = document.search_form.zokusei;
   var renkei = document.search_form.renkei;
+  var il = document.forms.search_form.IL;
   var search = new Array();
   search.push(shuzoku.options[shuzoku.selectedIndex].value);
   search.push(skill.value);
   search.push(shubetu.options[shubetu.selectedIndex].value);
   search.push(zokusei.options[zokusei.selectedIndex].value);
   search.push(renkei.options[renkei.selectedIndex].value);
-  for(var i = 0; i < 5; i++){
+  search.push(il.checked);
+  for(var i = 0; i < 6; i++){
     newList = arrayFilter(newList, i, search[i]);
   }
   return newList;
@@ -934,7 +1035,9 @@ function arrayFilter(list, type, keyword){
           key2 = object.renkei2;
           break;
       }
-      if(key.indexOf(keyword) >= 0 || key2.indexOf(keyword) >= 0){
+      if(type == 5){
+        if(!object.flg || (keyword =- false))return true;
+      } else if(key.indexOf(keyword) >= 0 || key2.indexOf(keyword) >= 0){
         return true;
       }
     });
