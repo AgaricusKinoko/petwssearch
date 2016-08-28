@@ -844,7 +844,7 @@ function defaultArray(type){
     charge:1,
     shubetu:"物理",
     zokusei:"打",
-    renkei1:"",
+    renkei1:"硬化",
     renkei2:"",
     tuika:"防御力ダウン"
   });
