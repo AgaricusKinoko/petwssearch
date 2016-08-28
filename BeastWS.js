@@ -203,7 +203,7 @@ function defaultArray(type){
     zokusei:"水",
     renkei1:"",
     renkei2:"",
-    tuika:"毒(-23HP/3sec) 4m30s"
+    tuika:"毒(-23HP/3sec 4m30s)"
   });
   WSList.push({
     shuzoku:"大羊",
@@ -233,7 +233,7 @@ function defaultArray(type){
     zokusei:"",
     renkei1:"",
     renkei2:"",
-    tuika:"バーサク(攻+50% 防-50%) 4m30s"
+    tuika:"バーサク(攻+50% 防-50% 4m30s)"
   });
   WSList.push({
     shuzoku:"大羊",
@@ -423,7 +423,7 @@ function defaultArray(type){
     zokusei:"",
     renkei1:"",
     renkei2:"",
-    tuika:"回避率アップ(回避+25%) 3m"
+    tuika:"回避率アップ(回避+25% 3m)"
   });
   WSList.push({
     shuzoku:"甲虫",
@@ -433,7 +433,7 @@ function defaultArray(type){
     zokusei:"水",
     renkei1:"",
     renkei2:"",
-    tuika:"STRダウン(STR-42) 3m"
+    tuika:"STRダウン(STR-42 3m)"
   });
   WSList.push({
     shuzoku:"甲虫",
@@ -443,7 +443,7 @@ function defaultArray(type){
     zokusei:"氷",
     renkei1:"",
     renkei2:"",
-    tuika:"回避率ダウン(回避-40) 3m"
+    tuika:"回避率ダウン(回避-40 3m)"
   });
   WSList.push({
     shuzoku:"コリブリ",
@@ -473,7 +473,7 @@ function defaultArray(type){
     zokusei:"土",
     renkei1:"",
     renkei2:"",
-    tuika:"スロウ(スロウ+25%) 4m30s"
+    tuika:"スロウ(スロウ+25% 4m30s)"
   });
   WSList.push({
     shuzoku:"ジャギル",
@@ -483,7 +483,7 @@ function defaultArray(type){
     zokusei:"",
     renkei1:"",
     renkei2:"",
-    tuika:"防御力アップ(防+100%) 2m - 5m"
+    tuika:"防御力アップ(防+100% 2m - 5m)"
   });
   WSList.push({
     shuzoku:"スナップウィード",
@@ -563,7 +563,7 @@ function defaultArray(type){
     zokusei:"水",
     renkei1:"",
     renkei2:"",
-    tuika:"最大HPダウン(最大HP-10%) 1m - 1m30s、バイオ(-15HP/3sec) 1m - 1m30s"
+    tuika:"最大HPダウン(最大HP-10% 1m - 1m30s)、バイオ(-15HP/3sec 1m - 1m30s)"
   });
   WSList.push({
     shuzoku:"スラッグ",
@@ -573,7 +573,7 @@ function defaultArray(type){
     zokusei:"水",
     renkei1:"",
     renkei2:"",
-    tuika:"攻撃力ダウン(攻-33%) 1m - 1m30s、防御力ダウン(防-33%) 1m - 1m30s"
+    tuika:"攻撃力ダウン(攻-33% 1m - 1m30s)、防御力ダウン(防-33% 1m - 1m30s)"
   });
   WSList.push({
     shuzoku:"ダイアマイト",
@@ -613,7 +613,7 @@ function defaultArray(type){
     zokusei:"土",
     renkei1:"",
     renkei2:"",
-    tuika:"スロウ(スロウ+50%) 2m"
+    tuika:"スロウ(スロウ+50% 2m)"
   });
   WSList.push({
     shuzoku:"チャプリ",
@@ -713,7 +713,7 @@ function defaultArray(type){
     zokusei:"",
     renkei1:"",
     renkei2:"",
-    tuika:"回避率アップ(回避+25%) 5m"
+    tuika:"回避率アップ(回避+25% 5m)"
   });
   WSList.push({
     shuzoku:"トカゲ",
@@ -723,7 +723,7 @@ function defaultArray(type){
     zokusei:"氷",
     renkei1:"",
     renkei2:"",
-    tuika:"回避率ダウン(回避-40) 3m"
+    tuika:"回避率ダウン(回避-40 3m)"
   });
   WSList.push({
     shuzoku:"フライ",
@@ -753,7 +753,7 @@ function defaultArray(type){
     zokusei:"",
     renkei1:"",
     renkei2:"",
-    tuika:"毒(-47HP/3sec) 4m30s"
+    tuika:"毒(-47HP/3sec 4m30s)"
   });
   WSList.push({
     shuzoku:"フライトラップ",
@@ -886,7 +886,7 @@ function defaultArray(type){
     zokusei:"斬",
     renkei1:"闇",
     renkei2:"重力",
-    tuika:"スロウ(スロウ+25) 2m - 5m"
+    tuika:"スロウ(スロウ+25% 2m - 5m)"
   });
   WSList.push({
     shuzoku:"リンクス",
@@ -939,7 +939,7 @@ function defaultArray(type){
     zokusei:"斬",
     renkei1:"切断",
     renkei2:"",
-    tuika:"命中率ダウン(命中-20) 30s - 1m"
+    tuika:"命中率ダウン(命中-20 30s - 1m)"
   });
   WSList.push({
     shuzoku:"レディバグ",
@@ -949,7 +949,7 @@ function defaultArray(type){
     zokusei:"水",
     renkei1:"",
     renkei2:"",
-    tuika:"攻撃力ダウン(攻-15%) 30s - 1m"
+    tuika:"攻撃力ダウン(攻-15% 30s - 1m)"
   });
   if(!type)createTable();
 }
