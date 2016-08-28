@@ -709,7 +709,7 @@ function defaultArray(type){
     shuzoku:"トカゲ",
     skill:"体液分泌",
     charge:1,
-    shubetu:"教科",
+    shubetu:"強化",
     zokusei:"",
     renkei1:"",
     renkei2:"",
